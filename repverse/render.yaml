@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: repverse
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: ZA_API_BASE
+        value: https://zeroauthoritydao.com/api/v1
+      - key: ZA_API_KEY
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false

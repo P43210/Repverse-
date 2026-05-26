@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'REPVERSE' %></title>
+  <meta name="description" content="REPVERSE — AI-powered contributor intelligence platform for DAOs & wallets. Explore reputation scores, contribution history, and trust grades on Zero Authority DAO.">
+  <meta property="og:title" content="REPVERSE — AI Reputation Explorer">
+  <meta property="og:description" content="Analyze contributor reputation, trust scores, and DAO activity on Zero Authority.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <img src="/images/logo.jpg" alt="REPVERSE" class="loader-logo">
+    <div class="loader-text">Loading REPVERSE</div>
+    <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="/" class="nav-logo">
+      <img src="/images/logo.jpg" alt="REPVERSE Logo">
+      <span class="nav-brand">REPVERSE</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="/" class="<%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">Home</a>
+      <a href="/#search">Explore</a>
+      <a href="/leaderboard" class="<%= typeof currentPage !== 'undefined' && currentPage === 'leaderboard' ? 'active' : '' %>">Leaderboard</a>
+      <a href="/#bounties">Bounties</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="https://zeroauthoritydao.com" target="_blank" rel="noopener" class="nav-cta">
+        Zero Authority ↗
+      </a>
+    </div>
+
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav">
+    <a href="/">Home</a>
+    <a href="/#search">Explore</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/#bounties">Bounties</a>
+    <a href="/#how-it-works">How It Works</a>
+    <a href="https://zeroauthoritydao.com" target="_blank" rel="noopener">Zero Authority ↗</a>
+  </div>
+
+  <div class="page-container">

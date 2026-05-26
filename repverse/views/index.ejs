@@ -1,0 +1,431 @@
+<%- include('partials/header', { currentPage: 'home' }) %>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge fade-in">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    AI-Powered Reputation Intelligence
+    <span class="api-status <%= apiConnected ? 'api-live' : 'api-demo' %>" style="margin-left:8px">
+      <span class="api-status-dot"></span>
+      <%= apiConnected ? 'API Live' : 'Configure API Key' %>
+    </span>
+  </div>
+
+  <h1 class="hero-title">
+    Explore Contributor<br>
+    <span class="gradient-text">Reputation On-Chain</span>
+  </h1>
+
+  <p class="hero-subtitle">
+    REPVERSE analyzes usernames and wallet addresses to deliver AI-generated reputation scores, DAO activity, governance analytics, and contribution breakdowns — all powered by Zero Authority DAO.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn btn-primary btn-lg" onclick="scrollToSearch()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Explore a Contributor
+    </button>
+    <a href="/leaderboard" class="btn btn-secondary btn-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      Leaderboard
+    </a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-value" data-count="12400">0</div>
+      <div class="hero-stat-label">Contributors</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value" data-count="3800">0</div>
+      <div class="hero-stat-label">Bounties</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value" data-count="940">0</div>
+      <div class="hero-stat-label">DAOs Indexed</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-value" data-count="28000">0</div>
+      <div class="hero-stat-label">Quests Completed</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REPUTATION EXPLAINED ──────────────────────────────────── -->
+<section class="section reveal" id="reputation">
+  <div class="section-header">
+    <div class="section-tag">How Reputation Works</div>
+    <h2 class="section-title">Trust is Earned, Not Assumed</h2>
+    <p class="section-desc">REPVERSE aggregates on-chain activity from Zero Authority DAO to compute a comprehensive, verifiable reputation profile for every contributor.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
+    <div class="card" style="text-align:center;padding:28px">
+      <div class="step-icon" style="margin:0 auto 16px">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      </div>
+      <div class="feature-title">Bounty Completion</div>
+      <div class="feature-desc">Every completed bounty is verifiable proof-of-work added to your on-chain reputation.</div>
+    </div>
+    <div class="card" style="text-align:center;padding:28px">
+      <div class="step-icon" style="margin:0 auto 16px;background:rgba(124,58,237,0.1);color:var(--accent-purple)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div class="feature-title">DAO Involvement</div>
+      <div class="feature-desc">Active participation in quests and community governance drives trust score upward.</div>
+    </div>
+    <div class="card" style="text-align:center;padding:28px">
+      <div class="step-icon" style="margin:0 auto 16px;background:rgba(16,185,129,0.1);color:var(--accent-green)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+      </div>
+      <div class="feature-title">Peer Endorsements</div>
+      <div class="feature-desc">Community endorsements validate skills and signal trusted, recurring contributors.</div>
+    </div>
+    <div class="card" style="text-align:center;padding:28px">
+      <div class="step-icon" style="margin:0 auto 16px;background:rgba(245,158,11,0.1);color:var(--accent-gold)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="feature-title">AI Trust Grade</div>
+      <div class="feature-desc">Claude AI analyzes all signals and assigns a trust grade from S (elite) to F (new).</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SEARCH ─────────────────────────────────────────────────── -->
+<section class="section reveal" id="search">
+  <div class="section-header">
+    <div class="section-tag">Contributor Explorer</div>
+    <h2 class="section-title">Search Any Contributor</h2>
+    <p class="section-desc">Enter a Zero Authority username (e.g. <strong>pale.btc</strong>, <strong>sman</strong>, <strong>TEAONA</strong>) or a Stacks wallet address to get an instant AI-powered reputation breakdown.</p>
+  </div>
+
+  <div style="max-width:700px;margin:0 auto">
+    <div class="search-box">
+      <span class="search-label">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="vertical-align:-3px;margin-right:6px;color:var(--accent-blue)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Analyze Reputation
+      </span>
+      <span class="search-sublabel">
+        Enter a Zero Authority username like <code style="background:var(--bg-secondary);padding:2px 8px;border-radius:4px;font-family:var(--font-mono);font-size:0.8rem">pale.btc</code> or a wallet address
+      </span>
+      <form id="search-form" onsubmit="return false">
+        <div class="search-input-group">
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="pale.btc · sman · SP2J6ZY48GV1EZ5V2V5RB9MP66SW86PYKKNRV9EJ7..."
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button type="submit" id="search-btn" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Analyze
+          </button>
+        </div>
+      </form>
+      <div id="result-panel" class="result-panel"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── LIVE BOUNTIES ─────────────────────────────────────────── -->
+<section class="section reveal" id="bounties">
+  <div class="section-header">
+    <div class="section-tag">Live from Zero Authority DAO</div>
+    <h2 class="section-title">Open Bounties</h2>
+    <p class="section-desc">Real bounties from Zero Authority DAO. Complete them to build your on-chain reputation score.</p>
+  </div>
+
+  <% if (bountyList && bountyList.length > 0) { %>
+    <div class="card-grid">
+      <% bountyList.slice(0,6).forEach(function(item) {
+        const b = item.data || item.bounty || item;
+        const status = (b.status || 'open').toLowerCase();
+        const title = b.title || b.name || 'Bounty';
+        const desc = b.description || b.summary || b.desc || '';
+        const reward = b.reward || b.prize || b.amount || null;
+        const tags = b.tags || b.categories || b.skills || [];
+        const category = b.category || (Array.isArray(tags) ? tags[0] : tags) || '';
+        const postedBy = b.postedBy || b.creator || b.organization || b.author || null;
+        const logo = b.logo || b.image || (postedBy && postedBy.avatar ? postedBy.avatar : null);
+        const endsAt = b.endsAt || b.endDate || b.deadline || null;
+        const bountyId = b.id || b._id || b.slug || '';
+        const bountyUrl = b.url || `https://zeroauthoritydao.com/bounty/${bountyId}`;
+      %>
+        <div class="card bounty-card reveal">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <% if (logo) { %>
+              <img src="<%= logo %>" alt="" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">
+            <% } %>
+            <span class="bounty-status status-<%= status === 'closed' ? 'closed' : (status === 'open' ? 'open' : 'pending') %>">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="7" height="7"><circle cx="12" cy="12" r="10"/></svg>
+              <%= status.toUpperCase() %>
+            </span>
+            <% if (category) { %><span class="bounty-tag"><%= typeof category === 'string' ? category : '' %></span><% } %>
+          </div>
+          <div class="bounty-title"><%= title %></div>
+          <% if (desc) { %><div class="bounty-desc"><%= desc.length > 100 ? desc.slice(0,100)+'…' : desc %></div><% } %>
+          <% if (postedBy) { %>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:12px">
+              Posted by <%= typeof postedBy === 'string' ? postedBy : (postedBy.name || postedBy.username || '') %>
+              <% if (endsAt) { %> · <% } %>
+            </div>
+          <% } %>
+          <div class="bounty-meta">
+            <% if (reward) { %>
+              <div class="bounty-reward">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                <%= typeof reward === 'object' ? (reward.amount || JSON.stringify(reward)) : reward %>
+              </div>
+            <% } %>
+            <a href="<%= bountyUrl %>" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+              View
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    <div style="text-align:center;margin-top:32px">
+      <a href="https://zeroauthoritydao.com/bounty" target="_blank" rel="noopener" class="btn btn-secondary">
+        View All Bounties on Zero Authority
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  <% } else { %>
+    <div class="empty-state">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="40" height="40" style="margin-bottom:12px;color:var(--text-muted)"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      <p style="margin-bottom:16px">Add your <code style="background:var(--bg-card);padding:2px 8px;border-radius:4px">ZA_API_KEY</code> in <code style="background:var(--bg-card);padding:2px 8px;border-radius:4px">.env</code> to see live bounties.</p>
+      <a href="https://zeroauthoritydao.com/bounty" target="_blank" rel="noopener" class="btn btn-outline">Browse on Zero Authority ↗</a>
+    </div>
+  <% } %>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── LEADERBOARD PREVIEW ────────────────────────────────────── -->
+<section class="section reveal" id="leaderboard-preview">
+  <div class="section-header">
+    <div class="section-tag">Top Contributors</div>
+    <h2 class="section-title">Reputation Leaderboard</h2>
+    <p class="section-desc">The most trusted contributors on Zero Authority DAO, ranked by on-chain reputation.</p>
+  </div>
+
+  <% if (leaderList && leaderList.length > 0) { %>
+    <div class="card" style="overflow:hidden;padding:0">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th style="width:56px">#</th>
+            <th>Contributor</th>
+            <th>Category</th>
+            <th>Network</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% leaderList.slice(0,8).forEach(function(item, idx) {
+            const u = item.data || item.user || item.creator || item.profile || item;
+            const rank = idx + 1;
+            const name = u.username || u.name || u.handle || u.displayName || `Creator #${rank}`;
+            const avatar = u.avatar || u.profileImage || u.image || null;
+            const category = u.category || u.role || '';
+            const network = u.network || 'Stacks Network';
+            const initials = name.substring(0,2).toUpperCase();
+          %>
+            <tr class="leaderboard-row" data-name="<%= name %>">
+              <td>
+                <% if (rank <= 3) { %>
+                  <span class="rank-number rank-<%= rank %>">
+                    <% if(rank===1) { %><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f59e0b" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <% } else if(rank===2) { %><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#94a3b8" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <% } else { %><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#cd7c3f" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <% } %>
+                  </span>
+                <% } else { %>
+                  <span class="rank-number"><%= rank %></span>
+                <% } %>
+              </td>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div class="contributor-avatar" style="width:34px;height:34px;font-size:0.75rem;flex-shrink:0">
+                    <% if (avatar) { %>
+                      <img src="<%= avatar %>" alt="<%= name %>" onerror="this.parentElement.textContent='<%= initials %>'">
+                    <% } else { %><%= initials %><% } %>
+                  </div>
+                  <a href="/contributor/<%= encodeURIComponent(name) %>" style="font-weight:600;color:var(--text-primary);transition:var(--transition)" onmouseover="this.style.color='var(--accent-blue)'" onmouseout="this.style.color='var(--text-primary)'"><%= name %></a>
+                </div>
+              </td>
+              <td><span class="tag" style="font-size:0.72rem"><%= category || '—' %></span></td>
+              <td style="font-size:0.8rem;color:var(--text-muted)"><%= network %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <a href="/leaderboard" class="btn btn-secondary">
+        View Full Leaderboard
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  <% } else { %>
+    <div class="empty-state">
+      <p>Add your <code style="background:var(--bg-card);padding:2px 8px;border-radius:4px">ZA_API_KEY</code> in <code style="background:var(--bg-card);padding:2px 8px;border-radius:4px">.env</code> to see live rankings.</p>
+    </div>
+  <% } %>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────────────── -->
+<section class="section reveal" id="how-it-works">
+  <div class="section-header">
+    <div class="section-tag">About REPVERSE</div>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-desc">REPVERSE connects to the Zero Authority DAO API and uses Claude AI to transform raw on-chain data into meaningful reputation intelligence.</p>
+  </div>
+  <div class="how-it-works-grid">
+    <div class="card step-card reveal">
+      <div class="step-number">1</div>
+      <div class="step-title">Enter Identifier</div>
+      <div class="step-desc">Input any Zero Authority username or Stacks wallet address (SP... / ST...) into the search bar.</div>
+    </div>
+    <div class="card step-card reveal" style="transition-delay:0.1s">
+      <div class="step-number">2</div>
+      <div class="step-title">Fetch On-Chain Data</div>
+      <div class="step-desc">REPVERSE calls the Zero Authority API to retrieve bounties, quests, gigs, endorsements and governance activity in real-time.</div>
+    </div>
+    <div class="card step-card reveal" style="transition-delay:0.2s">
+      <div class="step-number">3</div>
+      <div class="step-title">AI Analysis</div>
+      <div class="step-desc">Claude AI synthesizes every signal into a coherent reputation summary, trust grade (S–F), and contributor strength breakdown.</div>
+    </div>
+    <div class="card step-card reveal" style="transition-delay:0.3s">
+      <div class="step-number">4</div>
+      <div class="step-title">Reputation Profile</div>
+      <div class="step-desc">Get a full contributor profile with activity heatmap, stats dashboard, DAO involvement, skills, and a public shareable link.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── FEATURES ───────────────────────────────────────────────── -->
+<section class="section reveal" id="features">
+  <div class="section-header">
+    <div class="section-tag">Features</div>
+    <h2 class="section-title">Everything You Need to<br>Evaluate a Contributor</h2>
+  </div>
+  <div class="features-grid">
+    <div class="card feature-card reveal">
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div class="feature-title">AI Reputation Insights</div>
+      <div class="feature-desc">Claude reads all on-chain signals and writes honest, human-readable contributor summaries with specific strengths highlighted.</div>
+    </div>
+    <div class="card feature-card reveal" style="transition-delay:0.05s">
+      <div class="feature-icon" style="background:rgba(124,58,237,0.1);color:var(--accent-purple)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="feature-title">Contributor Explorer</div>
+      <div class="feature-desc">Search by username or wallet to surface contribution history, skills, DAO memberships, and total earnings.</div>
+    </div>
+    <div class="card feature-card reveal" style="transition-delay:0.1s">
+      <div class="feature-icon" style="background:rgba(16,185,129,0.1);color:var(--accent-green)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      </div>
+      <div class="feature-title">Live Bounty Tracking</div>
+      <div class="feature-desc">Real-time live bounties from Zero Authority DAO, displayed with status, category, and one-click view.</div>
+    </div>
+    <div class="card feature-card reveal" style="transition-delay:0.15s">
+      <div class="feature-icon" style="background:rgba(245,158,11,0.1);color:var(--accent-gold)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="feature-title">Trust Score & Grade</div>
+      <div class="feature-desc">A composite trust score (0–100) and letter grade (S/A/B/C/D/F) computed from all available on-chain signals.</div>
+    </div>
+    <div class="card feature-card reveal" style="transition-delay:0.2s">
+      <div class="feature-icon" style="background:rgba(6,182,212,0.1);color:var(--accent-cyan)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+      </div>
+      <div class="feature-title">Governance Analytics</div>
+      <div class="feature-desc">Track SIP votes, proposals, and governance participation to measure DAO leadership credibility.</div>
+    </div>
+    <div class="card feature-card reveal" style="transition-delay:0.25s">
+      <div class="feature-icon" style="background:rgba(99,102,241,0.1);color:var(--accent-indigo)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      </div>
+      <div class="feature-title">Reputation Leaderboard</div>
+      <div class="feature-desc">Searchable, ranked leaderboard of top contributors across the Zero Authority ecosystem.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── TESTIMONIALS ───────────────────────────────────────────── -->
+<section class="section reveal" id="testimonials">
+  <div class="section-header">
+    <div class="section-tag">Community</div>
+    <h2 class="section-title">What Contributors Say</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="card testimonial-card reveal">
+      <div class="testimonial-quote">"REPVERSE finally gives me a way to show my work beyond just a GitHub link. My trust grade is something I'm actually proud to share with DAOs."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">AK</div>
+        <div>
+          <div class="testimonial-name">pale.btc</div>
+          <div class="testimonial-role">Smart Contract Auditor · Zero Authority DAO</div>
+        </div>
+      </div>
+    </div>
+    <div class="card testimonial-card reveal" style="transition-delay:0.1s">
+      <div class="testimonial-quote">"As a DAO operator, I used REPVERSE to vet new contributors before assigning high-value bounties. The AI summary saved hours of research."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background:var(--grad-secondary)">DH</div>
+        <div>
+          <div class="testimonial-name">Dawg Haus</div>
+          <div class="testimonial-role">Creator · Stacks Network</div>
+        </div>
+      </div>
+    </div>
+    <div class="card testimonial-card reveal" style="transition-delay:0.2s">
+      <div class="testimonial-quote">"The contribution heatmap is fantastic — I can see my growth over time and it keeps me motivated to stay consistent with quests and bounties."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#14b8a6,#06b6d4)">TE</div>
+        <div>
+          <div class="testimonial-name">TEAONA</div>
+          <div class="testimonial-role">Contributor · Zero Authority DAO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────── -->
+<section class="cta-section reveal">
+  <div class="cta-glow"></div>
+  <div class="section-tag">Get Started</div>
+  <h2 class="cta-title">Your Reputation Is<br><span style="background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Already On-Chain</span></h2>
+  <p class="cta-desc">Every bounty, quest, and governance vote you've made is already part of your permanent record. REPVERSE just makes it visible.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+    <button onclick="scrollToSearch()" class="btn btn-primary btn-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Explore Your Reputation
+    </button>
+    <a href="https://zeroauthoritydao.com" target="_blank" rel="noopener" class="btn btn-secondary btn-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Join Zero Authority
+    </a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

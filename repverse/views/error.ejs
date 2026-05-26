@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+
+<section style="min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px">
+  <div>
+    <div style="color:var(--accent-red);margin-bottom:16px">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <h1 style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:12px">Something went wrong</h1>
+    <p style="color:var(--text-secondary);margin-bottom:32px"><%= typeof message !== 'undefined' ? message : 'An unexpected error occurred.' %></p>
+    <a href="/" class="btn btn-primary">Go Home</a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

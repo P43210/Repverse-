@@ -1,0 +1,128 @@
+<%- include('partials/header', { currentPage: 'leaderboard' }) %>
+
+<section class="section" style="max-width:1100px;margin:0 auto">
+
+  <div class="section-header" style="margin-bottom:40px">
+    <div class="section-tag">Rankings</div>
+    <h1 class="section-title">Reputation Leaderboard</h1>
+    <p class="section-desc">Top contributors on Zero Authority DAO ranked by on-chain reputation score.</p>
+  </div>
+
+  <!-- Filter bar -->
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap">
+    <div style="flex:1;min-width:200px;position:relative">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-muted)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input
+        type="text"
+        id="leaderboard-filter"
+        placeholder="Filter by username..."
+        class="search-input"
+        style="width:100%;padding-left:40px"
+      >
+    </div>
+    <div style="font-size:0.875rem;color:var(--text-muted)">
+      <% if (total > 0) { %>
+        Showing <strong style="color:var(--text-primary)"><%= total %></strong> contributors
+      <% } else { %>
+        No contributors found
+      <% } %>
+    </div>
+  </div>
+
+  <% if (leaders && leaders.length > 0) { %>
+    <div class="card" style="overflow:hidden;padding:0">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th style="width:60px">Rank</th>
+            <th>Contributor</th>
+            <th>Rep Score</th>
+            <th>Trust Grade</th>
+            <th>Bounties</th>
+            <th>Quests</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% leaders.forEach(function(leader) { %>
+            <tr class="leaderboard-row" data-name="<%= leader.username %>">
+              <td>
+                <% if (leader.rank <= 3) { %>
+                  <span class="rank-number rank-<%= leader.rank %>" style="font-size:1.1rem">
+                    <% if(leader.rank===1) { %>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f59e0b" width="20" height="20"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <% } else if(leader.rank===2) { %>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#94a3b8" width="20" height="20"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <% } else { %>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#cd7c3f" width="20" height="20"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <% } %>
+                  </span>
+                <% } else { %>
+                  <span class="rank-number"><%= leader.rank %></span>
+                <% } %>
+              </td>
+              <td>
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div class="contributor-avatar" style="width:38px;height:38px;font-size:0.8rem;flex-shrink:0">
+                    <% if (leader.avatar) { %>
+                      <img src="<%= leader.avatar %>" alt="<%= leader.username %>" onerror="this.parentElement.textContent='<%= leader.username.substring(0,2).toUpperCase() %>'">
+                    <% } else { %>
+                      <%= leader.username.substring(0,2).toUpperCase() %>
+                    <% } %>
+                  </div>
+                  <div>
+                    <div style="font-weight:600;font-size:0.9rem">
+                      <%= leader.username %>
+                      <% if (leader.isVerified) { %>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--accent-blue)" width="13" height="13" style="vertical-align:-1px;margin-left:3px"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                      <% } %>
+                    </div>
+                    <% if (leader.wallet) { %>
+                      <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text-muted)">
+                        <%= leader.wallet.length > 16 ? leader.wallet.slice(0,8)+'...'+leader.wallet.slice(-6) : leader.wallet %>
+                      </div>
+                    <% } %>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span style="font-family:var(--font-mono);font-weight:700;font-size:1rem;color:var(--accent-blue)"><%= leader.reputationScore %></span>
+              </td>
+              <td>
+                <span class="trust-score-badge trust-<%= leader.trust.grade.toLowerCase() %>" style="display:inline-flex">
+                  <%= leader.trust.grade %>
+                </span>
+              </td>
+              <td style="font-weight:600"><%= leader.bountiesCompleted %></td>
+              <td style="font-weight:600"><%= leader.questsCompleted %></td>
+              <td>
+                <a href="/contributor/<%= encodeURIComponent(leader.username) %>" class="btn btn-secondary btn-sm">
+                  View
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+  <% } else { %>
+    <div class="empty-state card">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted)"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      <p style="margin-bottom:16px">No leaderboard data available. Make sure your API key is configured.</p>
+      <a href="https://zeroauthoritydao.com/dashboard/api-keys" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+        Get API Key
+      </a>
+    </div>
+  <% } %>
+
+  <div style="text-align:center;margin-top:32px">
+    <a href="https://zeroauthoritydao.com/creators" target="_blank" rel="noopener" class="btn btn-secondary">
+      Explore All on Zero Authority
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
