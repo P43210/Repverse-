@@ -1,0 +1,129 @@
+<% if (notFound) { %>
+  <div class="empty-state container">
+    <h2>Couldn't resolve "<%= query %>"</h2>
+    <p>Check the BNS name or address and try again — it should look like <span class="mono">name.btc</span> or <span class="mono">SP2J6…</span>.</p>
+    <div style="margin-top:24px;">
+      <a href="/" class="btn btn-primary">Back to search</a>
+    </div>
+  </div>
+<% } else { %>
+  <div class="container">
+    <div class="profile-header">
+      <div class="profile-avatar"></div>
+      <div>
+        <div class="profile-name"><%= bnsName || (address.slice(0,8) + '…' + address.slice(-6)) %></div>
+        <div class="profile-address">
+          <span class="mono"><%= address %></span>
+          <button data-copy="<%= address %>" title="Copy address">Copy</button>
+        </div>
+        <% if (allNames && allNames.length) { %>
+          <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+            <% allNames.forEach(function(n) { %>
+              <span class="tag" style="background:var(--accent-soft); color:var(--accent-strong);"><%= n %></span>
+            <% }) %>
+          </div>
+        <% } %>
+      </div>
+      <div class="profile-actions">
+        <a href="/wallet/<%= encodeURIComponent(query) %>/transactions" class="btn btn-outline">Full history</a>
+        <a href="/compare/result?a=<%= encodeURIComponent(query) %>&b=" class="btn btn-outline">Compare</a>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="label">STX balance</div>
+        <div class="value">
+          <% if (balances && balances.stx) { %>
+            <%= (Number(balances.stx.balance) / 1e6).toLocaleString(undefined, {maximumFractionDigits: 2}) %>
+          <% } else { %>—<% } %>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Locked (stacking)</div>
+        <div class="value">
+          <% if (balances && balances.stx) { %>
+            <%= (Number(balances.stx.locked) / 1e6).toLocaleString(undefined, {maximumFractionDigits: 2}) %>
+          <% } else { %>—<% } %>
+        </div>
+      </div>
+      <div class="stat-box">
+        <div class="label">NFTs held</div>
+        <div class="value"><%= nfts ? (nfts.total ?? (nfts.results ? nfts.results.length : 0)) : '—' %></div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Total transactions</div>
+        <div class="value"><%= txs ? txs.total : '—' %></div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:28px;">
+      <div class="card">
+        <div class="card-header">
+          <h3>NFT collection</h3>
+          <span class="meta">Recent holdings</span>
+        </div>
+        <% if (nfts && nfts.results && nfts.results.length) { %>
+          <div class="nft-grid">
+            <% nfts.results.slice(0,12).forEach(function(n) { %>
+              <div class="nft-tile"><%= (n.asset_identifier || '').split('::')[1] || 'NFT' %></div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <p style="font-size:14px;">No NFTs found for this wallet.</p>
+        <% } %>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Fungible tokens</h3>
+          <span class="meta">Non-STX balances</span>
+        </div>
+        <% if (balances && balances.fungible_tokens && Object.keys(balances.fungible_tokens).length) { %>
+          <table class="data-table">
+            <tbody>
+              <% Object.entries(balances.fungible_tokens).slice(0,8).forEach(function([key, tok]) { %>
+                <tr>
+                  <td style="font-family:var(--font-sans);"><%= key.split('::')[1] || key.split('.').pop() %></td>
+                  <td style="text-align:right;"><%= tok.balance %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <p style="font-size:14px;">No fungible token balances found.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Recent transactions</h3>
+        <a href="/wallet/<%= encodeURIComponent(query) %>/transactions" style="font-size:13px; color:var(--accent-strong);">View all →</a>
+      </div>
+      <% if (txs && txs.results && txs.results.length) { %>
+        <table class="data-table">
+          <thead>
+            <tr><th>Type</th><th>Status</th><th>Time</th><th>Tx ID</th></tr>
+          </thead>
+          <tbody>
+            <% txs.results.slice(0,10).forEach(function(t) { %>
+              <tr>
+                <td style="font-family:var(--font-sans);"><%= t.tx_type %></td>
+                <td>
+                  <span class="tag <%= t.tx_status === 'success' ? 'tag-success' : (t.tx_status.includes('abort') ? 'tag-fail' : 'tag-pending') %>">
+                    <%= t.tx_status %>
+                  </span>
+                </td>
+                <td><%= new Date(t.burn_block_time_iso || t.receipt_time_iso || Date.now()).toLocaleDateString() %></td>
+                <td><%= (t.tx_id || '').slice(0,10) %>…</td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p style="font-size:14px;">No transactions found.</p>
+      <% } %>
+    </div>
+  </div>
+<% } %>

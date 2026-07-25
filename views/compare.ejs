@@ -1,0 +1,61 @@
+<div class="container section-tight">
+  <div class="section-head">
+    <span class="eyebrow">Side by side</span>
+    <h2>Compare wallets</h2>
+    <p>Enter two BNS names or addresses to compare their holdings and activity.</p>
+  </div>
+
+  <form action="/compare/result" method="GET" class="card" style="max-width:720px; margin: 0 auto 36px;">
+    <div class="grid-2">
+      <div class="field">
+        <label>Wallet A</label>
+        <input type="text" name="a" placeholder="e.g. leather.btc" value="<%= a ? a.raw : '' %>" required />
+      </div>
+      <div class="field">
+        <label>Wallet B</label>
+        <input type="text" name="b" placeholder="e.g. muneeb.btc" value="<%= b ? b.raw : '' %>" required />
+      </div>
+    </div>
+    <button class="btn btn-primary btn-block btn-lg">Compare</button>
+  </form>
+
+  <% if (a && b) { %>
+    <div class="vs-wrap">
+      <div class="card">
+        <h3 style="font-size:18px; margin-bottom:4px;"><%= a.bnsName || a.raw %></h3>
+        <p class="mono" style="font-size:12.5px; margin-bottom:20px;"><%= a.address || 'Not found' %></p>
+        <% if (a.address) { %>
+          <div class="stat-box" style="padding:0; margin-bottom:14px;">
+            <div class="label">STX balance</div>
+            <div class="value"><%= a.balances && a.balances.stx ? (Number(a.balances.stx.balance)/1e6).toLocaleString(undefined,{maximumFractionDigits:2}) : '—' %></div>
+          </div>
+          <div class="stat-box" style="padding:0;">
+            <div class="label">NFTs held</div>
+            <div class="value"><%= a.nftCount %></div>
+          </div>
+        <% } else { %>
+          <p style="font-size:13.5px;">Could not resolve this wallet.</p>
+        <% } %>
+      </div>
+
+      <div class="vs-badge">VS</div>
+
+      <div class="card">
+        <h3 style="font-size:18px; margin-bottom:4px;"><%= b.bnsName || b.raw %></h3>
+        <p class="mono" style="font-size:12.5px; margin-bottom:20px;"><%= b.address || 'Not found' %></p>
+        <% if (b.address) { %>
+          <div class="stat-box" style="padding:0; margin-bottom:14px;">
+            <div class="label">STX balance</div>
+            <div class="value"><%= b.balances && b.balances.stx ? (Number(b.balances.stx.balance)/1e6).toLocaleString(undefined,{maximumFractionDigits:2}) : '—' %></div>
+          </div>
+          <div class="stat-box" style="padding:0;">
+            <div class="label">NFTs held</div>
+            <div class="value"><%= b.nftCount %></div>
+          </div>
+        <% } else { %>
+          <p style="font-size:13.5px;">Could not resolve this wallet.</p>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+</div>

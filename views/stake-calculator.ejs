@@ -1,0 +1,62 @@
+<div class="container section-tight">
+  <div class="section-head">
+    <span class="eyebrow">Stacking</span>
+    <h2>Stake calculator</h2>
+    <p>Estimate STX stacking rewards across cycles. Cycles run roughly every two weeks (~26/year).</p>
+  </div>
+
+  <div class="calc-grid" style="max-width:900px; margin:0 auto;">
+    <form id="stake-form" class="card">
+      <div class="field">
+        <label>STX amount to stack</label>
+        <input type="number" id="stake-amount" value="10000" min="0" step="1" />
+      </div>
+      <div class="field">
+        <label>Estimated APY (%)</label>
+        <input type="number" id="stake-apy" value="8" min="0" step="0.1" />
+        <div class="range-row"><span>Typical range: 4–12%</span></div>
+      </div>
+      <div class="field">
+        <label>Number of cycles</label>
+        <input type="number" id="stake-cycles" value="6" min="1" step="1" />
+        <div class="range-row"><span>6 cycles ≈ 3 months</span></div>
+      </div>
+      <div class="field">
+        <label>STX price (USD, for reward value)</label>
+        <input type="number" id="stake-price" value="0.75" min="0" step="0.01" />
+      </div>
+    </form>
+
+    <div class="card">
+      <div class="calc-result">
+        <div class="big" id="stake-out-cycle">—</div>
+        <div class="label">Estimated reward per cycle</div>
+      </div>
+      <div class="calc-result" style="border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft);">
+        <div class="big" id="stake-out-total">—</div>
+        <div class="label">Total estimated reward</div>
+      </div>
+      <div class="calc-result">
+        <div class="big" id="stake-out-usd" style="color:var(--green);">—</div>
+        <div class="label">Estimated USD value</div>
+      </div>
+    </div>
+  </div>
+
+  <% if (poxInfo) { %>
+    <div class="card" style="max-width:900px; margin:24px auto 0;">
+      <div class="card-header"><h3>Live PoX info</h3><span class="meta">From the Stacks node</span></div>
+      <table class="data-table">
+        <tbody>
+          <tr><td style="font-family:var(--font-sans);">Current cycle</td><td><%= poxInfo.reward_cycle_id %></td></tr>
+          <tr><td style="font-family:var(--font-sans);">Cycle length (blocks)</td><td><%= poxInfo.reward_cycle_length %></td></tr>
+          <tr><td style="font-family:var(--font-sans);">Min STX to stack</td><td><%= (Number(poxInfo.next_cycle?.min_threshold_ustx || 0) / 1e6).toLocaleString() %></td></tr>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+  <p style="text-align:center; font-size:12.5px; color:var(--text-faint); margin-top:20px;">
+    This calculator provides estimates only and is not financial advice. Actual stacking rewards vary based on pool participation, BTC rewards, and network conditions.
+  </p>
+</div>

@@ -1,0 +1,48 @@
+<section class="section-tight">
+  <div class="container">
+    <h1 style="font-size:26px; margin-bottom:6px;">
+      Welcome<% if (currentUser.name) { %>, <%= currentUser.name.split(' ')[0] %><% } %>
+    </h1>
+    <p style="margin-bottom:36px;">
+      <% if (currentUser.authType === 'wallet') { %>
+        Connected via wallet · <span class="mono"><%= currentUser.stxAddress %></span>
+      <% } else { %>
+        Signed in with Google · <%= currentUser.email %>
+      <% } %>
+    </p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <h3>Quick lookup</h3>
+        </div>
+        <form action="/search" method="GET" style="display:flex; gap:8px;">
+          <input type="text" name="q" placeholder="BNS name or address…" required
+            style="flex:1; background:var(--bg-elevated); border:1px solid var(--border); border-radius:8px; padding:10px 12px; color:var(--text); font-family:var(--font-mono); outline:none;" />
+          <button class="btn btn-primary">Go</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Your watchlist</h3>
+          <span class="meta">Saved wallets</span>
+        </div>
+        <p style="font-size:14px;">
+          You haven't saved any wallets yet. Look up a wallet and save it to track it here.
+        </p>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;" class="grid-2">
+      <a href="/compare" class="card" style="display:block;">
+        <h3 style="font-size:16px; margin-bottom:6px;">Compare two wallets →</h3>
+        <p style="font-size:14px;">Side-by-side holdings, NFTs, and activity.</p>
+      </a>
+      <a href="/stake-calculator" class="card" style="display:block;">
+        <h3 style="font-size:16px; margin-bottom:6px;">Run the stake calculator →</h3>
+        <p style="font-size:14px;">Estimate your stacking rewards across cycles.</p>
+      </a>
+    </div>
+  </div>
+</section>

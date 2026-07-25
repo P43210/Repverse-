@@ -1,0 +1,25 @@
+<div class="form-panel">
+  <div class="fade-in-logo" style="display:flex; justify-content:center; margin-bottom:20px;">
+    <img src="/img/logo-mark.svg" alt="Repverse" width="40" height="40" />
+  </div>
+  <h1>Sign in to Repverse</h1>
+  <p class="sub">Track wallets, save comparisons, and sync your watchlist.</p>
+
+  <% if (messages.error && messages.error.length) { %>
+    <div class="alert alert-error"><%= messages.error[0] %></div>
+  <% } %>
+
+  <a href="/auth/google" class="btn btn-outline btn-block btn-lg">
+    Continue with Google
+  </a>
+
+  <div class="divider">or</div>
+
+  <button id="wallet-connect-btn" data-connect-wallet class="btn btn-primary btn-block btn-lg">
+    Connect wallet
+  </button>
+
+  <p style="text-align:center; font-size:12.5px; margin-top:20px; color:var(--text-faint);">
+    Supports Leather, Xverse, and other Stacks Connect–compatible wallets.
+  </p>
+</div>

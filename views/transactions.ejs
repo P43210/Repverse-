@@ -1,0 +1,52 @@
+<div class="container section-tight">
+  <% if (!address) { %>
+    <div class="empty-state">
+      <h2>Couldn't load transactions for "<%= query %>"</h2>
+      <a href="/" class="btn btn-primary">Back to search</a>
+    </div>
+  <% } else { %>
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <h1 style="font-size:22px;">Transaction history</h1>
+        <p style="font-size:14px;"><%= bnsName || address %></p>
+      </div>
+      <a href="/wallet/<%= encodeURIComponent(query) %>" class="btn btn-outline">← Back to profile</a>
+    </div>
+
+    <div class="card">
+      <% if (txs && txs.results && txs.results.length) { %>
+        <table class="data-table">
+          <thead>
+            <tr><th>Type</th><th>Status</th><th>Date</th><th>Fee (STX)</th><th>Tx ID</th></tr>
+          </thead>
+          <tbody>
+            <% txs.results.forEach(function(t) { %>
+              <tr>
+                <td style="font-family:var(--font-sans);"><%= t.tx_type %></td>
+                <td>
+                  <span class="tag <%= t.tx_status === 'success' ? 'tag-success' : (t.tx_status.includes('abort') ? 'tag-fail' : 'tag-pending') %>">
+                    <%= t.tx_status %>
+                  </span>
+                </td>
+                <td><%= new Date(t.burn_block_time_iso || Date.now()).toLocaleString() %></td>
+                <td><%= t.fee_rate ? (Number(t.fee_rate) / 1e6).toFixed(6) : '—' %></td>
+                <td><%= (t.tx_id || '').slice(0,14) %>…</td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+
+        <div style="display:flex; justify-content:space-between; margin-top:20px;">
+          <% if (offset > 0) { %>
+            <a class="btn btn-outline" href="/wallet/<%= encodeURIComponent(query) %>/transactions?offset=<%= Math.max(0, offset-20) %>">← Newer</a>
+          <% } else { %><span></span><% } %>
+          <% if (txs.results.length === 20) { %>
+            <a class="btn btn-outline" href="/wallet/<%= encodeURIComponent(query) %>/transactions?offset=<%= offset+20 %>">Older →</a>
+          <% } %>
+        </div>
+      <% } else { %>
+        <p style="font-size:14px;">No transactions found.</p>
+      <% } %>
+    </div>
+  <% } %>
+</div>

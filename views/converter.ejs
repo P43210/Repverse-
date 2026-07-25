@@ -1,0 +1,39 @@
+<div class="container section-tight">
+  <div class="section-head">
+    <span class="eyebrow">Live rates</span>
+    <h2>Currency converter</h2>
+    <p>Convert STX and other major assets in real time.</p>
+  </div>
+
+  <div class="converter-panel">
+    <form id="converter-form" onsubmit="return false;">
+      <div class="converter-row">
+        <input type="number" id="converter-amount" value="1" min="0" step="any" />
+        <select id="converter-from">
+          <% symbols.forEach(function(s) { %>
+            <option value="<%= s.symbol %>" <%= s.symbol === 'STX' ? 'selected' : '' %>><%= s.symbol %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="converter-swap">
+        <button type="button" id="converter-swap" title="Swap">⇅</button>
+      </div>
+
+      <div class="converter-row">
+        <input type="text" id="converter-result" readonly placeholder="0.00" />
+        <select id="converter-to">
+          <% symbols.forEach(function(s) { %>
+            <option value="<%= s.symbol %>" <%= s.symbol === 'USDT' ? 'selected' : '' %>><%= s.symbol %></option>
+          <% }) %>
+          <option value="USD">USD</option>
+        </select>
+      </div>
+    </form>
+    <div class="converter-meta" id="converter-meta">Enter an amount to convert</div>
+  </div>
+
+  <p style="text-align:center; font-size:12.5px; color:var(--text-faint); margin-top:20px; max-width:520px; margin-left:auto; margin-right:auto;">
+    Rates are powered by the CoinMarketCap API. If no API key is configured, set <span class="mono">CMC_API_KEY</span> in your <span class="mono">.env</span> to enable live conversions.
+  </p>
+</div>
